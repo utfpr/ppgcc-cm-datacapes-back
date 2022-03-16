@@ -1,0 +1,20 @@
+version: '3'
+
+networks:
+  postgres-network:
+    driver: bridge
+
+services:
+
+  postgres:
+    restart: always
+    container_name: postgres-pgcc
+    image: postgres:12.2-alpine
+    networks:
+      - postgres-network
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=pgcc
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
