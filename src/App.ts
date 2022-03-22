@@ -1,3 +1,4 @@
+import { Router } from 'express';
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 const http = require('http');
@@ -14,6 +15,10 @@ const server = http.createServer((req, res) => {
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+export const router = Router();
+
+server.use('/api', router);
 
 createConnection()
   .then((connection) => {})
