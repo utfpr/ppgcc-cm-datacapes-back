@@ -1,7 +1,8 @@
 import { Router } from 'express';
-import {parseXML} from '../controllers/parser/ParserController.js';
+import parserRouter from './parser.route';
 
-export const router = Router();
+const routes = Router();
 
+routes.use(parserRouter);
 
-router.post('/parser/', parseXML)
+export default routes;

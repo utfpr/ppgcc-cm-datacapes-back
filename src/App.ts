@@ -1,19 +1,17 @@
-import { Router } from 'express';
 import 'reflect-metadata';
-import { createConnection } from 'typeorm';
-const http = require('http');
+import express from 'express';
+import cors from 'cors';
+import routes from './routes';
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const app = express();
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
-});
+// cors
+app.use(cors());
+app.use(express.json());
+app.use(routes);
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(3333, () => {
+  console.log('Backend on...');
 });
 
 export const router = Router();
