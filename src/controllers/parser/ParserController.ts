@@ -1,4 +1,7 @@
 
 export const parseFile = function(req, res) {
-  res.send('FUNC NÃO IMPLEMENTADA: parse file');
+  console.log('Arquivo enviado: ', req.file);
+  res.status(200).json({
+    message: 'Arquivo enviado com sucesso!',
+  });
 };
