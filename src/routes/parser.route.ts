@@ -1,10 +1,10 @@
 
 import { Router } from 'express';
 import { parseFile } from '../controllers/parser/ParserController';
-import { uploadImg } from './../services/multer/multer';
+import { uploadFile } from './../services/multer/multer';
 
 const parserRouter = Router();
 
-parserRouter.post('/parser', uploadImg.single('arquivo'), parseFile);
+parserRouter.post('/parser', uploadFile.single('arquivo'), parseFile);
 
 export default parserRouter;
