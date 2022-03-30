@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 const http = require('http');
+import './utils/response/customSuccess';
 
 const hostname = '127.0.0.1';
 const port = 3000;
