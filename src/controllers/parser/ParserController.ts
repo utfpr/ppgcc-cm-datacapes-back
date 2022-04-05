@@ -39,10 +39,10 @@ export const parseFile = function(req, res) {
       });
     }
     
-    executeFile(req.file.path);
+    let msg = executeFile(req.file.path);
     
     return res.status(200).json({
-      message: 'Arquivo enviado com sucesso!',
+      message: msg,
     });
   })
 };
