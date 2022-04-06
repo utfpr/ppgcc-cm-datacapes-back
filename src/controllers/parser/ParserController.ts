@@ -42,7 +42,7 @@ export const parseFile = function(req, res) {
     let msg = executeFile(req.file.path);
     
     return res.status(200).json({
-      message: msg,
+      author_name: msg,
     });
   })
 };
