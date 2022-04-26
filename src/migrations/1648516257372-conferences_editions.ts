@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
 
 export class conference_editions1648065315900 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -40,12 +35,12 @@ export class conference_editions1648065315900 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'publisher_company_name',
+            name: 'eIsbn',
             type: 'varchar',
           },
           {
-            name: 'publisher_company_city',
-            type: 'varchar',
+            name: 'publisher_id',
+            type: 'uuid',
           },
           {
             name: 'conference_id',
@@ -53,19 +48,19 @@ export class conference_editions1648065315900 implements MigrationInterface {
           },
         ],
       }),
-      true
-    );
+      true,
+    )
     await queryRunner.createForeignKey(
       'conference_editions',
       new TableForeignKey({
         columnNames: ['conference_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'conferences',
-      })
-    );
+      }),
+    )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('conference_editions');
+    await queryRunner.dropTable('conference_editions')
   }
 }

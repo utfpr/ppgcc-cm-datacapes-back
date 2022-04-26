@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
 
 export class journal_paper_author1648066413298 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -31,29 +26,33 @@ export class journal_paper_author1648066413298 implements MigrationInterface {
             name: 'authorship_order',
             type: 'integer',
           },
+          {
+            name: 'role',
+            type: 'integer',
+          },
         ],
       }),
-      true
-    );
+      true,
+    )
     await queryRunner.createForeignKey(
       'journal_paper_author',
       new TableForeignKey({
         columnNames: ['author_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'authors',
-      })
-    );
+      }),
+    )
     await queryRunner.createForeignKey(
       'journal_paper_author',
       new TableForeignKey({
         columnNames: ['journal_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'journal_papers',
-      })
-    );
+      }),
+    )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('journal_paper_author');
+    await queryRunner.dropTable('journal_paper_author')
   }
 }

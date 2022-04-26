@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from 'typeorm'
 
 export class citationNames1648066413298 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -29,19 +24,19 @@ export class citationNames1648066413298 implements MigrationInterface {
           },
         ],
       }),
-      true
-    );
+      true,
+    )
     await queryRunner.createForeignKey(
       'citation_names',
       new TableForeignKey({
         columnNames: ['author_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'authors',
-      })
-    );
+      }),
+    )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('citation_names');
+    await queryRunner.dropTable('citation_names')
   }
 }
