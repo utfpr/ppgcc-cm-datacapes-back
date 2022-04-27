@@ -16,7 +16,5 @@ server.listen(port, hostname, () => {
 });
 
 createConnection()
-  .then((connection) => {
-    console.log(connection);
-  })
+  .then((connection) => {})
   .catch((error) => console.log(error));
