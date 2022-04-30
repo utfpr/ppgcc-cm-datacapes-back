@@ -1,11 +1,11 @@
 import 'reflect-metadata';
+import { createConnection } from 'typeorm';
 import express from 'express';
 import cors from 'cors';
 import routes from './routes';
 
 const app = express();
 
-// cors
 app.use(cors());
 app.use(express.json());
 app.use('/api', routes);
@@ -14,10 +14,6 @@ app.listen(3333, () => {
   console.log('Backend on...');
 });
 
-export const router = Router();
-
-server.use('/api', router);
-
 createConnection()
-  .then((connection) => {})
+  .then((connection) => { })
   .catch((error) => console.log(error));
