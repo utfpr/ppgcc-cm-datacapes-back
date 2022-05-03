@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { getPersonalInfo } from "../author/author"
 import { XMLParser } from "fast-xml-parser"
 
 let options = {
@@ -20,5 +21,5 @@ export const executeFile = function(filePath: string) {
     const result = parser.parse(file)
     
     // retorna o nome do autor
-    return result['CURRICULO-VITAE']['DADOS-GERAIS']['@_NOME-COMPLETO'];
+    return getPersonalInfo(result);
 };
