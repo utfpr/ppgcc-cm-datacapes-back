@@ -1,3 +1,8 @@
 import { Router } from 'express';
+import parserRouter from './parser.route';
 
-const router = Router();
+const routes = Router();
+
+routes.use(parserRouter);
+
+export default routes;
