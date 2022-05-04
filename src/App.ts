@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
 import routes from './routes';
-import dbCreateConnection from 'database/dbCreateConnection';
+import { dbCreateConnection } from './database/dbCreateConnection';
 
 const app = express();
 

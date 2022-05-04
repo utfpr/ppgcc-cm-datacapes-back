@@ -11,15 +11,12 @@ let options = {
     trimValues: true,
 };
 
-export const executeFile = function(filePath: string) {
-    
-    // abrir o arquivo
-    let file = fs.readFileSync(filePath, {encoding:'utf8'});
+export const executeFile = async function(file: Buffer) {
     
     // cria o parser xml com as opções
     const parser = new XMLParser(options)
     const result = parser.parse(file)
     
     // retorna o nome do autor
-    return getPersonalInfo(result);
+    return await getPersonalInfo(result);
 };
