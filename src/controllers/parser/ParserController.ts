@@ -2,6 +2,9 @@
 import { executeFile } from '../../services/parser/parser';
 import { uploadFile } from '../../services/multer/multer';
 import { Request, Response } from 'express';
+import { QueryFailedError } from 'typeorm';
+import 'express-async-errors';
+import { ErrorResponse } from '../../dto/ErrorResponse';
 
 var arquivo = uploadFile.single('arquivo');
 
@@ -40,7 +43,15 @@ export const parseFile = function(req: Request, res: Response) {
       });
     }
     
-    let msg = await executeFile(req.file.buffer);
+    let msg = ''
+
+    try {
+      msg = await executeFile(req.file.buffer);
+    } catch (error) {
+      let err = error as QueryFailedError;
+      
+      return res.status(422).json(new ErrorResponse(err.driverError.detail, 200));
+    }
     
     return res.status(200).json({
       author_name: msg,
