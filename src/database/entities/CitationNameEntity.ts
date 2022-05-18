@@ -12,5 +12,5 @@ export class CitationNameEntity {
   name: string;
 
   @ManyToOne(() => AuthorEntity, (author) => author.citationNames)
-  author: AuthorEntity;
+  author: AuthorEntity; 
 }

@@ -17,6 +17,8 @@ export const executeFile = async function(file: Buffer) {
     const parser = new XMLParser(options)
     const result = parser.parse(file)
     
-    // retorna o nome do autor
-    return await getPersonalInfo(result);
+    // retorna o author
+    let author = await getPersonalInfo(result);
+    
+    return author.name;
 };
