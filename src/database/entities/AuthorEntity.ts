@@ -5,7 +5,7 @@ import { JournalPaperAuthorEntity } from './JournalPaperAuthorEntity'
 
 @Entity('authors')
 export class AuthorEntity {
-  @PrimaryColumn({ name: 'id', type: 'uuid' })
+  @PrimaryColumn({ name: 'id', type: 'uuid', default: 'uuid_generate_v4()' })
   id: string
 
   @Column({ name: 'orcid', type: 'varchar', nullable: true, unique: true })
