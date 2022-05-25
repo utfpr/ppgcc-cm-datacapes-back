@@ -1,11 +1,11 @@
 import { createCitationsFromAuthor } from "../citations/citations";
+import { createConferenceFromAuthor } from "../conference/conference";
 import { getManager, getRepository } from "typeorm";
 import { AuthorEntity } from "../../database/entities/AuthorEntity";
 import { CitationNameEntity } from "../../database/entities/CitationNameEntity";
 
 export const getPersonalInfo = async function(json) {
     const AuthorRepository = getRepository(AuthorEntity);
-    const citationNameRepository = getRepository(CitationNameEntity);
 
     let author = new AuthorEntity();
 
@@ -17,11 +17,12 @@ export const getPersonalInfo = async function(json) {
     author = AuthorRepository.create(author);
 
     await getManager().transaction(async manager => {
-        author = await manager.save(author);
+        // author = await manager.save(author);
         
         let citationsName = createCitationsFromAuthor(json, author);
+        let conferences = createConferenceFromAuthor(json, author);
 
-        await manager.save(CitationNameEntity, citationsName);
+        // await manager.save(CitationNameEntity, citationsName);
     }).catch(err => {
         console.log('ERRO: ', err)
     })
