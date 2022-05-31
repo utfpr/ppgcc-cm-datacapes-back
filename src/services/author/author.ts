@@ -1,32 +1,18 @@
-import { createCitationsFromAuthor } from "../citations/citations";
-import { createConferenceFromAuthor } from "../conference/conference";
-import { getManager, getRepository } from "typeorm";
+import { getRepository } from "typeorm";
 import { AuthorEntity } from "../../database/entities/AuthorEntity";
-import { CitationNameEntity } from "../../database/entities/CitationNameEntity";
 
-export const getPersonalInfo = async function(json) {
+export const getAuthor = async function(author: AuthorEntity) {
     const AuthorRepository = getRepository(AuthorEntity);
 
-    let author = new AuthorEntity();
-
-    author.name = json['CURRICULO-VITAE']['DADOS-GERAIS']['@_NOME-COMPLETO'];
-    author.orcid = json['CURRICULO-VITAE']['DADOS-GERAIS']['@_ORCID-ID'];
-    author.institution = json['CURRICULO-VITAE']['DADOS-GERAIS']['ENDERECO']['ENDERECO-PROFISSIONAL']['@_NOME-INSTITUICAO-EMPRESA'];
-    author.lattesId = json['CURRICULO-VITAE']['@_NUMERO-IDENTIFICADOR'];
-
-    author = AuthorRepository.create(author);
-
-    await getManager().transaction(async manager => {
-        // author = await manager.save(author);
-        
-        let citationsName = createCitationsFromAuthor(json, author);
-        let conferences = createConferenceFromAuthor(json, author);
-
-        // await manager.save(CitationNameEntity, citationsName);
-    }).catch(err => {
-        console.log('ERRO: ', err)
-    })
+    let authorFound = await AuthorRepository.findOne({ lattesId: author.lattesId });
     
-    console.log('Author save: ', author)
-    return author;
+    if (!authorFound) {
+        authorFound = AuthorRepository.create(author);
+    } else {
+        authorFound.name = author.name;
+        authorFound.orcid = author.orcid;
+        authorFound.institution = author.institution;
+    }
+
+    return authorFound;
 }

@@ -48,9 +48,13 @@ export const parseFile = function(req: Request, res: Response) {
     try {
       msg = await executeFile(req.file.buffer);
     } catch (error) {
-      let err = error as QueryFailedError;
       
-      return res.status(422).json(new ErrorResponse(err.driverError.detail, 200));
+      if (error instanceof(QueryFailedError)) {
+        let err = error as QueryFailedError;
+        return res.status(422).json(new ErrorResponse(err.driverError.detail, 200));
+      } else {
+        console.log('Deu erro: ', error)
+      }
     }
     
     return res.status(200).json({

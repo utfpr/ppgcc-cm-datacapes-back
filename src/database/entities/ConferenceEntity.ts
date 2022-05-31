@@ -10,9 +10,11 @@ export class ConferenceEntity {
   @Column({ name: 'acronym', type: 'varchar' })
   acronym: string
 
+  // NOME-DO-EVENTO
   @Column({ name: 'title', type: 'varchar' })
   title: string
   
+  // CLASSIFICACAO-DO-EVENTO
   @Column({ name: 'scopeId', type: 'integer' })
   scope: number
 
