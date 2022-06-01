@@ -1,8 +1,9 @@
 import fs from 'fs';
 import { getAuthor } from "../author/author"
 import { XMLParser } from "fast-xml-parser"
-import { getCitations } from 'services/citations/citations';
-import { AuthorEntity } from 'database/entities/AuthorEntity';
+import { getCitations } from '../citations/citations';
+import { AuthorEntity } from '../../database/entities/AuthorEntity';
+import { getRepository } from 'typeorm';
 
 let options = {
     ignoreAttributes : false,
@@ -29,7 +30,7 @@ export const executeFile = async function(file: Buffer) {
     author = await getAuthor(author);
 
     const citationsNames = result['CURRICULO-VITAE']['DADOS-GERAIS']['@_NOME-EM-CITACOES-BIBLIOGRAFICAS'].split(';')
-    let authorCitationsName = getCitations(citationsNames, author);
+    let authorCitationsName = await getCitations(citationsNames, author);
 
     return author.name;
 };
