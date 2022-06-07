@@ -2,31 +2,34 @@ import { AuthorEntity } from "../../database/entities/AuthorEntity";
 import { CitationNameEntity } from "../../database/entities/CitationNameEntity";
 import { getManager, getRepository } from "typeorm";
 
-export const getCitations = async function(citationNames: string[], author: AuthorEntity) {
-    const citationNameRepository = getRepository(CitationNameEntity);
+export class CitationService {
     
-    let citations: Array<CitationNameEntity> = []
-
-    for (const name of citationNames) {
+    static findOrPopulate = async function(citationNames: string[], author: AuthorEntity) {
+        const citationNameRepository = getRepository(CitationNameEntity);
         
-        let citationFound = await citationNameRepository.findOne({
-            where: { name: name, author: author },
-            relations: ['author']
-        });
-
-
-        if (undefined != citationFound){
-            let citation = new CitationNameEntity();
-            citation.name = name;
-            citation.author = author;
+        let citations: Array<CitationNameEntity> = []
     
-            citations.push(citationNameRepository.create(citation));
-
-        } else {
-            citations.push(citationFound);
+        for (const name of citationNames) {
+            
+            let citationFound = await citationNameRepository.findOne({
+                where: { name: name, author: author },
+                relations: ['author']
+            });
+    
+            if (undefined !== citationFound) {
+                let citation = new CitationNameEntity();
+                citation.name = name;
+                citation.author = author;
+        
+                citations.push(citationNameRepository.create(citation));
+    
+            } else {
+                citations.push(citationFound);
+            }
+    
         }
-
+    
+        return citations;
     }
 
-    return citations;
 }

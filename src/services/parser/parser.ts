@@ -1,7 +1,7 @@
 import fs from 'fs';
-import { getAuthor } from "../author/author"
+import { AuthorService } from "../author/author"
 import { XMLParser } from "fast-xml-parser"
-import { getCitations } from '../citations/citations';
+import { CitationService } from '../citations/citations';
 import { AuthorEntity } from '../../database/entities/AuthorEntity';
 import { getRepository } from 'typeorm';
 
@@ -27,10 +27,12 @@ export const executeFile = async function(file: Buffer) {
     author.institution = result['CURRICULO-VITAE']['DADOS-GERAIS']['ENDERECO']['ENDERECO-PROFISSIONAL']['@_NOME-INSTITUICAO-EMPRESA'];
 
     // retorna o author
-    author = await getAuthor(author);
+    author = await AuthorService.findOrPopulate(author);
 
     const citationsNames = result['CURRICULO-VITAE']['DADOS-GERAIS']['@_NOME-EM-CITACOES-BIBLIOGRAFICAS'].split(';')
-    let authorCitationsName = await getCitations(citationsNames, author);
 
+    let authorCitationsName = await CitationService.findOrPopulate(citationsNames, author);
+
+    
     return author.name;
 };
