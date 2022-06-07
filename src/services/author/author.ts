@@ -3,13 +3,13 @@ import { AuthorEntity } from "../../database/entities/AuthorEntity";
 
 export class AuthorService {
 
+    private static AuthorRepository = getRepository(AuthorEntity);
+
     static findOrPopulate = async function(author: AuthorEntity) {
-        const AuthorRepository = getRepository(AuthorEntity);
-    
-        let authorFound = await AuthorRepository.findOne({ lattesId: author.lattesId });
+        let authorFound = await this.AuthorRepository.findOne({ lattesId: author.lattesId });
     
         if (!authorFound) {
-            authorFound = AuthorRepository.create(author);
+            authorFound = this.AuthorRepository.create(author);
             
         } else {
             authorFound.name = author.name;
@@ -17,6 +17,12 @@ export class AuthorService {
             authorFound.institution = author.institution;
         }
     
+        return authorFound;
+    }
+
+    static getAuthor = async function(lattesId: string) {
+        let authorFound = await this.AuthorRepository.findOne({ lattesId: lattesId });
+        
         return authorFound;
     }
 

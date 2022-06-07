@@ -4,14 +4,15 @@ import { getManager, getRepository } from "typeorm";
 
 export class CitationService {
     
+    private citationNameRepository = getRepository(CitationNameEntity);
+    
     static findOrPopulate = async function(citationNames: string[], author: AuthorEntity) {
-        const citationNameRepository = getRepository(CitationNameEntity);
         
         let citations: Array<CitationNameEntity> = []
     
         for (const name of citationNames) {
             
-            let citationFound = await citationNameRepository.findOne({
+            let citationFound = await this.citationNameRepository.findOne({
                 where: { name: name, author: author },
                 relations: ['author']
             });
@@ -21,7 +22,7 @@ export class CitationService {
                 citation.name = name;
                 citation.author = author;
         
-                citations.push(citationNameRepository.create(citation));
+                citations.push(this.citationNameRepository.create(citation));
     
             } else {
                 citations.push(citationFound);

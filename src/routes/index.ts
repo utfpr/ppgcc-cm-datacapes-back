@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import parserRouter from './parser.route';
+import authorRouter from './parser.route';
 
 const routes = Router();
 
-routes.use(parserRouter);
+routes.use(authorRouter);
 
 export default routes;

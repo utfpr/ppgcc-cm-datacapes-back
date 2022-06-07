@@ -3,7 +3,7 @@ import { AuthorService } from "../author/author"
 import { XMLParser } from "fast-xml-parser"
 import { CitationService } from '../citations/citations';
 import { AuthorEntity } from '../../database/entities/AuthorEntity';
-import { getRepository } from 'typeorm';
+import { getManager, getRepository } from 'typeorm';
 
 let options = {
     ignoreAttributes : false,
@@ -33,6 +33,12 @@ export const executeFile = async function(file: Buffer) {
 
     let authorCitationsName = await CitationService.findOrPopulate(citationsNames, author);
 
-    
+    await getManager().transaction(async manager => {
+        await manager.save(authorCitationsName);
+
+        author.citationNames = authorCitationsName;
+        await manager.save(author);
+    });
+
     return author.name;
 };
