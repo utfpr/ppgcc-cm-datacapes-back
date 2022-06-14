@@ -1,5 +1,5 @@
 
-import { executeFile } from '../../services/parser/parser';
+import { ParserService } from '../../services/parser/parser';
 import { uploadFile } from '../../services/multer/multer';
 import { Request, Response } from 'express';
 import { QueryFailedError } from 'typeorm';
@@ -46,7 +46,7 @@ export const parseFile = function(req: Request, res: Response) {
     let msg = ''
 
     try {
-      msg = await executeFile(req.file.buffer);
+      msg = await ParserService.executeFile(req.file.buffer);
     } catch (error) {
       
       if (error instanceof(QueryFailedError)) {

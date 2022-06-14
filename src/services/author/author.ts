@@ -2,11 +2,16 @@ import { getRepository } from "typeorm";
 import { AuthorEntity } from "../../database/entities/AuthorEntity";
 
 export class AuthorService {
+    
+    // private AuthorRepository;
 
-    private static AuthorRepository = getRepository(AuthorEntity);
+    constructor() {
+        // this.AuthorRepository = getRepository(AuthorEntity);
+    }
 
     static findOrPopulate = async function(author: AuthorEntity) {
-        let authorFound = await this.AuthorRepository.findOne({ lattesId: author.lattesId });
+        let authorRepository = getRepository(AuthorEntity);
+        let authorFound = await authorRepository.findOne({ lattesId: author.lattesId });
     
         if (!authorFound) {
             authorFound = this.AuthorRepository.create(author);
@@ -21,7 +26,8 @@ export class AuthorService {
     }
 
     static getAuthor = async function(lattesId: string) {
-        let authorFound = await this.AuthorRepository.findOne({ lattesId: lattesId });
+        let authorRepository = getRepository(AuthorEntity);
+        let authorFound = await authorRepository.findOne({ lattesId: lattesId });
         
         return authorFound;
     }
