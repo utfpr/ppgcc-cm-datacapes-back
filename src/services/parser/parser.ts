@@ -15,15 +15,6 @@ let options = {
 };
 
 export class ParserService {
-
-    // private authorService = null;
-    // private citationService;
-
-    constructor() {
-        // this.authorService = new AuthorService();
-        // this.citationService = new CitationService();
-    }
-
     static executeFile = async function(file: Buffer) {
         
         // cria o parser xml com as opções
@@ -42,11 +33,11 @@ export class ParserService {
         const citationsNames = result['CURRICULO-VITAE']['DADOS-GERAIS']['@_NOME-EM-CITACOES-BIBLIOGRAFICAS'].split(';')
     
         let authorCitationsName = await CitationService.findOrPopulate(citationsNames, author);
+        console.log(authorCitationsName)
     
         await getManager().transaction(async manager => {
             await manager.save(authorCitationsName);
     
-            author.citationNames = authorCitationsName;
             await manager.save(author);
         });
     

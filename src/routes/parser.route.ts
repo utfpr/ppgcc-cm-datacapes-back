@@ -1,9 +1,8 @@
-
 import { Router } from 'express';
-import { AuthorController } from '../controllers/author/AuthorController';
+import { parseFile } from '../controllers/parser/ParserController';
 
-const authorRouter = Router();
+const parserRouter = Router();
 
-authorRouter.get('/author/:id', AuthorController.getAuthor);
+parserRouter.post('/parser', parseFile);
 
-export default authorRouter;
+export default parserRouter;

@@ -14,8 +14,7 @@ export class AuthorService {
         let authorFound = await authorRepository.findOne({ lattesId: author.lattesId });
     
         if (!authorFound) {
-            authorFound = this.AuthorRepository.create(author);
-            
+            authorFound = await authorRepository.create(author);
         } else {
             authorFound.name = author.name;
             authorFound.orcid = author.orcid;
@@ -25,11 +24,10 @@ export class AuthorService {
         return authorFound;
     }
 
-    static getAuthor = async function(lattesId: string) {
+    static getAuthor = async function(id: string) {
         let authorRepository = getRepository(AuthorEntity);
-        let authorFound = await authorRepository.findOne({ lattesId: lattesId });
+        let authorFound = await authorRepository.findOne({ id });
         
         return authorFound;
     }
-
 }

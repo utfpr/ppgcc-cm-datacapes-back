@@ -13,11 +13,11 @@ const config: ConnectionOptions = {
   database: process.env.TYPEORM_DATABASE,
   synchronize: false,
   logging: false,
-  entities: [process.env.TYPEORM_ENTITIES],
-  migrations: [process.env.TYPEORM_MIGRATIONS],
+  entities: ['src/database/entities/*.ts'],
+  migrations: ['src/database/migrations/*.ts'],
   cli: {
-    entitiesDir: process.env.TYPEORM_ENTITIES_DIR,
-    migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
+    entitiesDir: 'src/database/entities',
+    migrationsDir: 'src/database/migrations'
   },
 };
 
