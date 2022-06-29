@@ -1,16 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { AuthorEntity } from './AuthorEntity';
 @Entity('citation_names')
 export class CitationNameEntity {
-  @PrimaryColumn({ name: 'id', type: 'uuid' })
+  @PrimaryColumn({ name: 'id', type: 'uuid', default: 'uuid_generate_v4()' })
   id: string;
-
-  @Column({ name: 'author_id', type: 'uuid' })
-  authorId: string;
 
   @Column({ name: 'name', type: 'varchar' })
   name: string;
 
   @ManyToOne(() => AuthorEntity, (author) => author.citationNames)
-  author: AuthorEntity;
+  @JoinColumn({ name: 'author_id' })
+  author: AuthorEntity; 
 }

@@ -1,11 +1,15 @@
 
-import { executeFile } from '../../services/parser/parser';
+import { ParserService } from '../../services/parser/parser';
 import { uploadFile } from '../../services/multer/multer';
+import { Request, Response } from 'express';
+import { QueryFailedError } from 'typeorm';
+import 'express-async-errors';
+import { ErrorResponse } from '../../dto/ErrorResponse';
 
 var arquivo = uploadFile.single('arquivo');
 
-export const parseFile = function(req, res) {
-  arquivo(req, res, (err) => {
+export const parseFile = function(req: Request, res: Response) {
+  arquivo(req, res, async (err) => {
 
     // caso ocorra algum problema com o multer (usuario enviar mais de um arquivo)
     if (err){
@@ -21,7 +25,7 @@ export const parseFile = function(req, res) {
       });
     }
     
-    let fileExtension = req.file.filename.split('.').pop();
+    let fileExtension = req.file.originalname.split('.').pop();
     
     // caso não seja um .xml
     if (fileExtension != 'xml') {
@@ -39,7 +43,13 @@ export const parseFile = function(req, res) {
       });
     }
     
-    let msg = executeFile(req.file.path);
+    let msg = ''
+
+    try {
+      msg = await ParserService.executeFile(req.file.buffer);
+    } catch (error) {
+      console.log('ERRO', error)
+    }
     
     return res.status(200).json({
       author_name: msg,

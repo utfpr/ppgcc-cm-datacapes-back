@@ -7,6 +7,7 @@ export class ConferenceEditionEntity {
   @PrimaryColumn({ name: 'id', type: 'uuid' })
   id: string
 
+  // TITULO-DOS-ANAIS-OU-PROCEEDINGS
   @Column({ name: 'title', type: 'varchar' })
   title: string
 

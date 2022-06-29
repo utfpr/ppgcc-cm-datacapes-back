@@ -5,13 +5,13 @@ import { JournalPaperAuthorEntity } from './JournalPaperAuthorEntity'
 
 @Entity('authors')
 export class AuthorEntity {
-  @PrimaryColumn({ name: 'id', type: 'uuid' })
+  @PrimaryColumn({ name: 'id', type: 'uuid', default: 'uuid_generate_v4()' })
   id: string
 
-  @Column({ name: 'orcid', type: 'varchar' })
+  @Column({ name: 'orcid', type: 'varchar', nullable: true, unique: true })
   orcid: string
 
-  @Column({ name: 'lattes_id', type: 'varchar' })
+  @Column({ name: 'lattes_id', type: 'varchar', nullable: false, unique: true })
   lattesId: string
 
   @Column({ name: 'name', type: 'varchar' })

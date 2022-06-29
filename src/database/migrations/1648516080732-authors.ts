@@ -18,10 +18,14 @@ export class authors1648065315900 implements MigrationInterface {
           {
             name: 'orcid',
             type: 'varchar',
+            isNullable: true,
+            isUnique: true
           },
           {
             name: 'lattes_id',
             type: 'varchar',
+            isNullable: false,
+            isUnique: true
           },
           {
             name: 'name',
